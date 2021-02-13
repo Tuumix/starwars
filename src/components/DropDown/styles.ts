@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Dropbtn = styled.div`
   display: inline-block;
+  flex: 1 1 300px;
   border-width: 2px;
   text-align: center;
   color: black;

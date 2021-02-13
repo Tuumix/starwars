@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { DataProps, TableContextProps } from './types';
 
 export const TableContext = createContext<TableContextProps>(
@@ -7,6 +7,9 @@ export const TableContext = createContext<TableContextProps>(
 
 export const TableProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<Array<DataProps>>([]);
+  const keys: Array<string> = Object.keys(data[0] || {}).filter(key =>{
+    return key !== 'residents';
+  })
 
   const loadPage = (page: number) => {
     fetch(`https://swapi-trybe.herokuapp.com/api/planets/?page=${page}`)
@@ -23,6 +26,7 @@ export const TableProvider: React.FC = ({ children }) => {
   return (
     <TableContext.Provider value={{
       data: data,
+      keys: keys,
       fetchData: fetchData,
       loadPage: loadPage,
     }}>

@@ -9,8 +9,9 @@ import {
 
 const FilterInfo: React.FC<NumericFilter> = ({ column, comparison, value}) => {
   const { removeFilter } = useContext(FilterContext);
+  //TODO fix this div inside the return method
   return (
-    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', margin: 10}}> 
       <Container>
         <SubContaienr>
           <p>{column}</p>

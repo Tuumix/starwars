@@ -8,11 +8,9 @@ export interface FilterContextProps {
   value: string;
   selectedColumn: string;
   selectedComparison: string;
-  // setNumericFilter: (column: string, comparison: string, value: string) => void;
-  setNameFilter: (value: string) => void;
+  setNameFilter: (columnName: string) => void;
   removeFilter: (columnName: string) => void;
-  addFilter: (columnName: string) => void;
+  addFilter: (length: string) => void;
   setColumn: (columnName: string) => void;
   setComparison: (comparison: string) => void;
-  setNome: (value: string) => void; //TODO
 }

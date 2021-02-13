@@ -1,17 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import TableHeader from './TableHeader';
+import TableRow from './TableRow';
 import { FilterContext } from '../../contexts/FilterContext/index';
 import { TableContext } from '../../contexts/TableContext';
 import {
   TableBody,
   TableContainer,
-  TD,
-
+  TH,
   THead,
   TR
 } from './styles';
 
 const Table: React.FC = () => {
-  const { data } = useContext(TableContext);
+  const { data, keys } = useContext(TableContext);
   const { filter } = useContext(FilterContext);
 
   const sortByOrder = () => {
@@ -31,7 +32,6 @@ const Table: React.FC = () => {
       return filter.filters.filterByNumericValues.every(item => 
         {
           if(item.comparison === 'igual a'){
-            console.log('entrando');
             return Number(item.value) === Number(teste[item.column])
           } else{
             return item.comparison === 'maior que' ? 
@@ -42,38 +42,28 @@ const Table: React.FC = () => {
       )
     })
     .map((teste, key) => 
-      <TR key={key}>                            
-        <TD>{teste.name}</TD>
-        <TD>{teste.climate}</TD>
-        <TD>{teste.created}</TD>
-        <TD>{teste.edited}</TD>
-        <TD>{'teste.films'}</TD>
-        <TD>{teste.gravity}</TD>
-        <TD>{teste.population}</TD>
-        <TD>{teste.orbital_period}</TD>
-        <TD>{teste.rotation_period}</TD>
-        <TD>{teste.surface_water}</TD>
-        <TD>{teste.terrain}</TD>
-        <TD>{teste.url}</TD>
-        <TD>{teste.diameter}</TD>
-      </TR>
+      <TableRow key={key} data={teste} />
     )
   }
 
   return (
-    <TableContainer>
-      <THead>
-        <TR>
-          {/* {
-            !!data && Object.keys(data[0]).map((key, index) => 
-            <TH key={index}>{key}</TH>
-            )} */}
-        </TR>
-      </THead>
-      <TableBody>
-        {renderTableData()}
-      </TableBody>
-    </TableContainer>
+    <div style={{overflowX: 'auto'}}>
+      <TableContainer>
+        <THead>
+          <TR>
+            {
+              keys.map((key, index) => 
+                <TableHeader header={key} key={index}>
+                  {key}
+                </TableHeader>
+              )}
+          </TR>
+        </THead>
+        <TableBody>
+          {renderTableData()}
+        </TableBody>
+      </TableContainer>
+    </div>
   )
 }
 

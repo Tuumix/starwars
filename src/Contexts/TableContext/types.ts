@@ -1,5 +1,6 @@
 export interface TableContextProps {
   data: DataProps[];
+  keys: string[];
   fetchData: () => void;
   loadPage: (page: number) => void;
 }

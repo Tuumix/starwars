@@ -16,18 +16,18 @@ export const THead = styled.thead`
 `
 
 export const TD = styled.td`
-  text-align: center;
+  text-align: left;
   color: #dcdde1;
   border-bottom: 1px solid #18FFFF;
   width: 150px;
   padding: 5px;
 `
 
-export const TableBody = styled.tbody``
 
 export const TR = styled.tr`
 `
 
+export const TableBody = styled.tbody``
 export const TH = styled.th`
   color: #F7F7F7
 ;

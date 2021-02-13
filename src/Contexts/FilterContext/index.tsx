@@ -50,18 +50,15 @@ export const FilterProvider: React.FC = ({ children }) => {
     setSelectedComparison(comparison);
   }
 
-  const setNome = (name: string) => { //TODO find a better name
-    setValue(name);
-  } 
-
-  const setNumericFilter = (column: string, comparison: string, value: string) => {
-    const obj: NumericFilter = {column: column, comparison: comparison, value: value};
+  const setNumericFilter = (columnName: string, comparison: string, value: string) => {
+    const obj: NumericFilter = {column: columnName, comparison: comparison, value: value};
     filter.filters.filterByNumericValues.push(obj);
     setFilters({...filter});
   }
 
-  const setNameFilter = (value: string) => {
-    filter.filters.filterByName.name = value;
+  const setNameFilter = (columnName: string) => {
+    filter.filters.filterByName.name = columnName;
+    // setName(name);
     setFilters({...filter});
   }
 
@@ -73,10 +70,11 @@ export const FilterProvider: React.FC = ({ children }) => {
     enableColumn(columnName);
     setFilters({...filter});
   }
-  const addFilter = (column: string) => {
-    setNumericFilter(selectedColumn, selectedComparison, value);
+  
+  const addFilter = (length: string) => {
+    setNumericFilter(selectedColumn, selectedComparison, length);
     const result = columns.map(item => {
-      if(item.name === column) {
+      if(item.name === selectedColumn) {
         item.disable = true;
       }
       return item;
@@ -88,10 +86,11 @@ export const FilterProvider: React.FC = ({ children }) => {
   }
 
   const enableColumn = (columnName: string) => {
-    columns.map(column => 
-      column.name === columnName ? column.disable = false: column
-    )
-
+    for(let i = 0; i < columns.length; i++) {
+      if(columns[i].name === columnName){
+        columns[i].disable = !columns[i].disable;
+      }
+    }
     setColumns([...columns]);
   }
 
@@ -108,9 +107,8 @@ export const FilterProvider: React.FC = ({ children }) => {
       addFilter: addFilter,
       setColumn: setColumn,
       setComparison:setComparison,
-      setNome: setNome, //TODO find a better name
     }}>
-      { children }
+      { children }  
     </FilterContext.Provider>
   );
 };

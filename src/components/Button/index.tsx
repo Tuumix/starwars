@@ -5,6 +5,7 @@ import {
   Title 
 } from './styles';
 
+
 const Button: React.FC<ButtonProps> = ({title, color, callback}) => {
   return (
     <Container 

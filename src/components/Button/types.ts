@@ -1,5 +1,5 @@
 export interface ButtonProps {
-  title: string;
+  title?: string;
   color: string;
   callback: (value: any) => void;
 }

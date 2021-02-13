@@ -5,7 +5,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   border-style: solid;
-  border-color: lightblue;
+  border-color: #f9c74f;
   width: 300px;
   height: 300px;
   border-style: solid;
