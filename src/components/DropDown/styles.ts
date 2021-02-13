@@ -12,7 +12,6 @@ export const Dropbtn = styled.div`
   &:hover {
     display: block;
   }
-
 `;
 
 export const DropDownContent = styled.div`
