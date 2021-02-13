@@ -1,17 +1,21 @@
 import React from 'react';
-import { Container } from './styles';
 import { ButtonProps } from './types';
+import { 
+  Container, 
+  Title 
+} from './styles';
 
-const Button: React.FC<ButtonProps> = (props) => {
-    const { title, color, callback} = props;
-    return (
-        <Container 
-            onClick={callback}
-            style={{borderColor: color, color: color}}
-        >
-            <p>{title}</p>
-        </Container>
-    )
+const Button: React.FC<ButtonProps> = ({title, color, callback}) => {
+  return (
+    <Container 
+      onClick={callback}
+      style={{borderColor: color, color: color}}
+    >
+      <Title>
+        {title}
+      </Title>
+    </Container>
+  )
 }
 
 export default Button;
