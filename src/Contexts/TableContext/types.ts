@@ -1,5 +1,3 @@
-import { FiltersTypes } from "../../Types/FilterTypes";
-
 export interface TableContextProps {
   data: DataProps[];
   fetchData: () => void;

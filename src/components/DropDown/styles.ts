@@ -25,7 +25,6 @@ export const DropDownContent = styled.div`
 
 export const DropDownLi = styled.li`
   display: inline-block;
-  float: left;
 
   &:hover {
     display: block;

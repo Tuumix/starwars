@@ -18,28 +18,21 @@ import {
 import FilterInfo from './FilterInfo';
 
 const Main: React.FC = () => {
-  const [selectedColumn, setSelectedColumn] = useState('');
-  const [selectedComparison, setSelectedComparison] = useState('');
   const { fetchData, loadPage } = useContext(TableContext);
-  const { filter, setNameFilter, setNumericFilter } = useContext(FilterContext);
-
   const [page, setPage] = useState(0);
-  const [value, setValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-
-  const [columns, setColumns] = useState<Array<DropItem>>([
-    {id: 1, name: 'population', disable: false},
-    {id: 2, name: 'orbital_period', disable: false},
-    {id: 3, name: 'diameter', disable: false},
-    {id: 4, name: 'rotation_period ', disable: false},
-    {id: 5, name: 'surface_water', disable: false},
-  ]);
-
-  const values: DropItem[] = [
-    {id: 1, name: 'maior que'},
-    {id: 2, name: 'menor que'},
-    {id: 3, name: 'igual a'},
-  ]
+  const { 
+    filter, 
+    columns, 
+    comparisons, 
+    selectedColumn, 
+    selectedComparison, 
+    setNameFilter, 
+    addFilter, 
+    setColumn, 
+    setComparison, 
+    setNome 
+  } = useContext(FilterContext);
 
   useEffect(() => {
     fetchData();
@@ -50,17 +43,6 @@ const Main: React.FC = () => {
       currentPage === 1 ? fetchData() : loadPage(currentPage);
       setPage(currentPage);
     }
-  }
-
-  const addFilter = (column: string) => {
-    setNumericFilter(selectedColumn, selectedComparison, value);
-    const result = columns.map(item => {
-      if(item.name === column) {
-        item.disable = true;
-      }
-      return item;
-    })
-    setColumns([...result]);
   }
 
   const renderModal = () => {
@@ -82,16 +64,16 @@ const Main: React.FC = () => {
         }
       }}
       >
-        <InputsContainer>
-          <DropDown value={selectedColumn} dropList={columns} handleChange={setSelectedColumn}/>
-          <DropDown value={selectedComparison} dropList={values} handleChange={setSelectedComparison}/>
-          <TextField label="Length" placeholder="Length" handleChange={(e) => setValue(e)}/>
-          <Button 
-            title="Add Filter"
-            color="lightblue"
-            callback={() => addFilter(selectedColumn)}
-          />
-        </InputsContainer>
+      <InputsContainer>
+        <DropDown value={selectedColumn} dropList={columns} handleChange={setColumn}/>
+        <DropDown value={selectedComparison} dropList={comparisons} handleChange={setComparison}/>
+        <TextField label="Length" placeholder="Length" handleChange={(e) => setNome(e)}/>
+        <Button 
+          title="Add Filter"
+          color="lightblue"
+          callback={() => addFilter(selectedColumn)}
+        />
+      </InputsContainer>
         <FiltersContainer>
           {
             filter.filters.filterByNumericValues.map((filter,key) => 
@@ -110,7 +92,7 @@ const Main: React.FC = () => {
   return (
     <>
       <Container>
-        <div style={{marginBottom: 10, width: 200}}>
+        <div style={{marginBottom: 10, width: 200}}> //TODO fix this using styled components
           <TextField label="Search by Name" placeholder="Name" handleChange={(e) => setNameFilter(e)}/>
         </div>
         <Table />
