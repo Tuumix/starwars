@@ -4,14 +4,16 @@ import DropDown from '../../components/DropDown';
 import Table from '../../components/Table';
 import TextField from '../../components/TextField';
 import { DropItem } from '../../components/DropDown/types';
-import { TableContext } from '../../Contexts/TableContext';
-import { FilterContext } from '../../Contexts/FilterContext';
+import { TableContext } from '../../contexts/TableContext';
+import { FilterContext } from '../../contexts/FilterContext';
 
 import Modal from 'react-modal';
 import {
   ButtonContainer,
   Container,
   ContainerAction,
+  FiltersContainer,
+  InputsContainer,
 } from './styles';
 import FilterInfo from './FilterInfo';
 
@@ -19,38 +21,46 @@ const Main: React.FC = () => {
   const [selectedColumn, setSelectedColumn] = useState('');
   const [selectedComparison, setSelectedComparison] = useState('');
   const { fetchData, loadPage } = useContext(TableContext);
-  const { filters, setNameFilter, setNumericFilter } = useContext(FilterContext);
+  const { filter, setNameFilter, setNumericFilter } = useContext(FilterContext);
 
   const [page, setPage] = useState(0);
   const [value, setValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
   const [columns, setColumns] = useState<Array<DropItem>>([
-    {id: 1, name: 'population', available: true},
-    {id: 2, name: 'orbital_period', available: true},
-    {id: 3, name: 'diameter', available: true},
-    {id: 4, name: 'rotation_period ', available: true},
-    {id: 5, name: 'surface_water', available: true},
+    {id: 1, name: 'population', disable: false},
+    {id: 2, name: 'orbital_period', disable: false},
+    {id: 3, name: 'diameter', disable: false},
+    {id: 4, name: 'rotation_period ', disable: false},
+    {id: 5, name: 'surface_water', disable: false},
   ]);
 
-  const values = [
+  const values: DropItem[] = [
     {id: 1, name: 'maior que'},
     {id: 2, name: 'menor que'},
     {id: 3, name: 'igual a'},
-  ] as DropItem[];
-
-
+  ]
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
 
   function turnPage(currentPage: number) {
     if(currentPage > 0) {
       currentPage === 1 ? fetchData() : loadPage(currentPage);
       setPage(currentPage);
     }
+  }
+
+  const addFilter = (column: string) => {
+    setNumericFilter(selectedColumn, selectedComparison, value);
+    const result = columns.map(item => {
+      if(item.name === column) {
+        item.disable = true;
+      }
+      return item;
+    })
+    setColumns([...result]);
   }
 
   const renderModal = () => {
@@ -72,19 +82,19 @@ const Main: React.FC = () => {
         }
       }}
       >
-        <div style={{display: 'flex', alignItems: 'center' ,width: '100%', justifyContent: 'space-evenly'}}>
+        <InputsContainer>
           <DropDown value={selectedColumn} dropList={columns} handleChange={setSelectedColumn}/>
           <DropDown value={selectedComparison} dropList={values} handleChange={setSelectedComparison}/>
           <TextField label="Length" placeholder="Length" handleChange={(e) => setValue(e)}/>
           <Button 
             title="Add Filter"
             color="lightblue"
-            callback={() => setNumericFilter(selectedColumn, 'maior que', value)}
+            callback={() => addFilter(selectedColumn)}
           />
-        </div>
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', backgroundColor: 'pink', height: '42vh'}}>
+        </InputsContainer>
+        <FiltersContainer>
           {
-            filters.filters.filterByNumericValues.map((filter,key) => 
+            filter.filters.filterByNumericValues.map((filter,key) => 
               <FilterInfo key={key} 
                 column={filter.column} 
                 comparison={filter.comparison} 
@@ -92,11 +102,10 @@ const Main: React.FC = () => {
               />
             )
           }
-        </div>
+        </FiltersContainer>
       </Modal>
     )
   }
-
 
   return (
     <>
@@ -121,7 +130,7 @@ const Main: React.FC = () => {
         </ContainerAction>
         {renderModal()}
         <Button 
-          title="Open Modal"
+          title="Add Filter"
           color="lightblue"
           callback={() => setIsOpen(true)}
         />

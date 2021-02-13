@@ -5,6 +5,7 @@ export interface FiltersTypes {
 export interface Filters {
   filterByName: FilterByName;
   filterByNumericValues: NumericFilter[];
+  order: Order;
 }
 
 export interface FilterByName {
@@ -15,4 +16,10 @@ export interface NumericFilter {
   column: string;
   comparison: string;
   value: string;
+}
+
+export interface Order {
+  [ key : string ] : string;
+  column: string;
+  sort: string;
 }

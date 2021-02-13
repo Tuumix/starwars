@@ -8,7 +8,6 @@ import {
 import { DropDownProps } from './types';
 
 const DropDown: React.FC<DropDownProps> = ({ value, dropList, handleChange }) => {
-
   return (
     <DropDownLi>
       <Dropbtn onClick={() => console.log("DropDown")}>
@@ -21,8 +20,9 @@ const DropDown: React.FC<DropDownProps> = ({ value, dropList, handleChange }) =>
               type="button" 
               key={item.id} 
               onClick={() => handleChange(item.name)} 
+              disabled={item.disable}
               >
-              <p>{item.name}</p>
+              <p style={{color: item.disable ? 'red': '#f9c74f'}}>{item.name}</p>
             </Option>
           )
         }

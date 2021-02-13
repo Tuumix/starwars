@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './components/Header';
-import {TableProvider} from './Contexts/TableContext';
-import {FilterProvider} from './Contexts/FilterContext'; 
+import {TableProvider} from './contexts/TableContext';
+import {FilterProvider} from './contexts/FilterContext'; 
 import Main from './pages/Main';
 import { GlobalStyle } from './Themes/GlobalStyle';
 

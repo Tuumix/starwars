@@ -1,51 +1,48 @@
 import React, { useContext } from 'react';
-import { TableContext } from '../../Contexts/TableContext';
-import { FilterContext } from '../../Contexts/FilterContext';
+import { FilterContext } from '../../contexts/FilterContext/index';
+import { TableContext } from '../../contexts/TableContext';
 import {
+  TableBody,
   TableContainer,
   TD,
-  TH,
+
   THead,
   TR
 } from './styles';
 
 const Table: React.FC = () => {
   const { data } = useContext(TableContext);
-  const { filters } = useContext(FilterContext);
+  const { filter } = useContext(FilterContext);
 
-  
-  // function contains(value: string, contain: string){
-  //   let found = false, includes = false;
-  //   for(let i = 0; i < value.length; i++) {
-  //     if(value[i] === contain[i])
-  //     {
-  //       let j = i;
-  //       while(value.length ){
-  //       }
-  //     }
-  //   }
-  // }   
+  const sortByOrder = () => {
+    return filter.filters.order.sort === 'ASC' ? 
+      data.sort((a,b) => { return a[filter.filters.order.column].valueOf() 
+        > b[filter.filters.order.column].valueOf() ? 1:-1}) : 
+          data.sort((a,b) => { return a[filter.filters.order.column].valueOf() 
+            < b[filter.filters.order.column].valueOf() ? 1:-1})
+  }
 
-  const renderRow = () => {
-    return data && data.filter(item => {
-      let filtrinho = filters.filters.filterByName.name;
-      if(filtrinho.length > 0) {
-          return item.name.includes(filtrinho);
-      } else {
-          return item;
-      }
-    })
-    .filter(teste => {
-      return filters.filters.filterByNumericValues.every(item => {
-        if(item.comparison === 'maior que') {
-          return Number(item.value) < Number(teste[item.column]);
-        } else{
-          return Number(item.value) > Number(teste[item.column]);
-        }     
-      })
+  const renderTableData = () => {
+    return data && sortByOrder().filter(item => {
+      let filterName = filter.filters.filterByName.name;
+      return filterName.length > 0 ? item.name.includes(filterName) : item
+    }
+    ).filter(teste => {
+      return filter.filters.filterByNumericValues.every(item => 
+        {
+          if(item.comparison === 'igual a'){
+            console.log('entrando');
+            return Number(item.value) === Number(teste[item.column])
+          } else{
+            return item.comparison === 'maior que' ? 
+              Number(item.value) < Number(teste[item.column]) : 
+                Number(item.value) > Number(teste[item.column])
+          }
+        }
+      )
     })
     .map((teste, key) => 
-      <TR style={{borderBottomColor: 'pink'}} key={key}>                            
+      <TR key={key}>                            
         <TD>{teste.name}</TD>
         <TD>{teste.climate}</TD>
         <TD>{teste.created}</TD>
@@ -66,16 +63,16 @@ const Table: React.FC = () => {
   return (
     <TableContainer>
       <THead>
-        <tr>
+        <TR>
           {/* {
-            data && Object.keys(data[0]).map((key, index) => 
+            !!data && Object.keys(data[0]).map((key, index) => 
             <TH key={index}>{key}</TH>
             )} */}
-        </tr>
+        </TR>
       </THead>
-      <tbody>
-        {renderRow()}
-      </tbody>
+      <TableBody>
+        {renderTableData()}
+      </TableBody>
     </TableContainer>
   )
 }

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const TableContainer = styled.table`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -24,8 +23,7 @@ export const TD = styled.td`
   padding: 5px;
 `
 
-export const TableBody = styled.table`
-`
+export const TableBody = styled.tbody``
 
 export const TR = styled.tr`
 `

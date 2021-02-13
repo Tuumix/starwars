@@ -8,7 +8,7 @@ export const Container = styled.div`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  width: 260px;
+  width: 320px;
   justify-content: space-between;
   margin-top: 5px;
 `
@@ -20,7 +20,16 @@ export const ContainerAction = styled.div`
   margin-top: 5px;
 `
 
-export const FilterContainer = styled.div`
-  /* flex-direction: column;
-  width: 80%; */
+export const InputsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content:space-evenly;
+`
+
+export const FiltersContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 42vh;
 `

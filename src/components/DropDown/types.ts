@@ -7,6 +7,6 @@ export interface DropDownProps {
 export interface DropItem {
   id: number;
   name: string;
-  available: boolean;
+  disable?: boolean;
 }
 
