@@ -1,6 +1,7 @@
 import React from 'react';
 import palette from '../../themes/palette';
 import {
+  ColumnName,
   Dropbtn,
   DropDownContent, 
   DropDownLi,
@@ -23,11 +24,11 @@ const DropDown: React.FC<DropDownProps> = ({ value, dropList, handleChange }) =>
               onClick={() => handleChange(item.name)} 
               disabled={item.disable}
               >
-              <p 
+              <ColumnName 
                 style={{color: item.disable ? palette.redPigment: palette.lightOrange}}
               >
                 {item.name}
-              </p>
+              </ColumnName>
             </Option>
           )
         }

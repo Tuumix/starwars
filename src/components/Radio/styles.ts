@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import palette from '../../themes/palette';
 
 export const Container = styled.div`
   display: flex;
@@ -9,4 +10,5 @@ export const Container = styled.div`
 export const Label = styled.span`
   font-size: 15px;
   margin-left: 10px;
+  color: ${palette.lightOrange};
 `

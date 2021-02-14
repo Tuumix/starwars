@@ -49,3 +49,7 @@ export const Option = styled.button`
     color: ${palette.lightOrange};
   }
 `
+
+export const ColumnName = styled.p`
+
+`

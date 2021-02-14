@@ -9,6 +9,7 @@ import TextField from '../../components/TextField';
 import { FilterContext } from '../../contexts/FilterContext';
 import { TableContext } from '../../contexts/TableContext';
 import {palette} from '../../themes/palette';
+import { validateField } from '../../utils';
 import FilterInfo from './FilterInfo';
 import {
   ButtonContainer,
@@ -17,7 +18,10 @@ import {
   FiltersContainer,
   InputsContainer,
   Select,
-  Option
+  Option,
+  OrderContainer,
+  FilterContainer,
+  Label
 } from './styles';
 
 
@@ -41,7 +45,7 @@ const Main: React.FC = () => {
     {id: 1, name: 'population', disable: false},
     {id: 2, name: 'orbital_period', disable: false},
     {id: 3, name: 'diameter', disable: false},
-    {id: 4, name: 'rotation_period ', disable: false},
+    {id: 4, name: 'rotation_period', disable: false},
     {id: 5, name: 'surface_water', disable: false},
   ]);
 
@@ -66,6 +70,10 @@ const Main: React.FC = () => {
     }
   }
 
+  const validateInput = (length: string) => {
+    setLength(validateField(length))
+  }
+
   const validateFields = () => {
     if(selectedComparison === '' || selectedColumn === '' || length === ''){
       console.log('ops, it looks like you are trying to insert nothing on filter!');
@@ -84,6 +92,7 @@ const Main: React.FC = () => {
     })
     setSelectedColumn('');
     setSelectedComparison('');
+    setLength('');
     setColumns([...result]);
   }
 
@@ -135,7 +144,7 @@ const Main: React.FC = () => {
           label="Length" 
           value={length} 
           placeholder="Length" 
-          handleChange={setLength}
+          handleChange={validateInput}
         />
         <Button 
           title="Confirm"
@@ -171,22 +180,27 @@ const Main: React.FC = () => {
     )
   }
 
+  const applyOrderBy = () => {
+    setOrderBy(orderColumn, selectedOrder);
+  }
+
   return (
     <>
-      <Container> 
-        <div style={{ display: 'flex', marginBottom: 10}}>
+      <Container>
+        <FilterContainer>
           <TextField 
             label="Search by Name" 
             value={filter.filters.filterByName.name} placeholder="Name" 
             handleChange={(e) => setNameFilter(e)}
           />
-          <>
+          <OrderContainer>
+            <Label>Order by : </Label>
             <RadioButton label="ASC" selectedValue={selectedOrder} handleChange={() => setOrder('ASC')} />  
             <RadioButton label="DESC" selectedValue={selectedOrder} handleChange={() => setOrder('DESC')} />  
-          </>
-          {renderSelect()}
-          <input type="button" onClick={() => setOrderBy(orderColumn, selectedOrder)} />
-        </div>
+            {renderSelect()}
+            <Button title="Apply order" color={palette.lightblue} callback={applyOrderBy}/>
+          </OrderContainer>
+        </FilterContainer> 
         <Table />
         <ContainerAction>
           <ButtonContainer>

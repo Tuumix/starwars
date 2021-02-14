@@ -55,3 +55,19 @@ export const Select = styled.select`
   outline: none;
   text-align: center;
 `
+
+export const FilterContainer = styled.div`
+  display: flex;
+`
+
+export const OrderContainer = styled.div`
+  display: flex;
+  width: 30%;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+`
+
+export const Label = styled.label`
+  color: ${palette.lightOrange};
+`
