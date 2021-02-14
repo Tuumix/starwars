@@ -4,7 +4,7 @@ import palette from '../../themes/palette';
 export const Container = styled.div`
   padding: 20px;
   background-color: #353b48;
-  height: 92vh;
+  height: 93vh;
 `
 
 export const ButtonContainer = styled.div`

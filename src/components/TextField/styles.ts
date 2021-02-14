@@ -37,3 +37,8 @@ export const Label = styled.p`
   font-size: 13px;
   color: ${palette.lightOrange};
 `
+
+export const ErrorMessage = styled.p`
+  font-size: 12px;
+  color: ${palette.redPigment};
+`

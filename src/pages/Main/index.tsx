@@ -34,6 +34,8 @@ const Main: React.FC = () => {
   const [orderColumn, setOrderColumn] = useState('name');
   const [selectedColumn, setSelectedColumn] = useState('');
   const [selectedComparison, setSelectedComparison] = useState('');
+  const [hasError, setHasError] = useState(false);
+
   const { 
     filter, 
     setNameFilter, 
@@ -76,8 +78,9 @@ const Main: React.FC = () => {
 
   const validateFields = () => {
     if(selectedComparison === '' || selectedColumn === '' || length === ''){
-      console.log('ops, it looks like you are trying to insert nothing on filter!');
+      setHasError(true);
     } else{
+      setHasError(false);
       addFilter(selectedColumn, selectedComparison, length);
     }
   }
@@ -142,7 +145,8 @@ const Main: React.FC = () => {
         />
         <TextField 
           label="Length" 
-          value={length} 
+          value={length}
+          hasError={hasError}
           placeholder="Length" 
           handleChange={validateInput}
         />

@@ -1,12 +1,13 @@
 import React from 'react';
 import {
   Container,
+  ErrorMessage,
   Input,
   Label, TextFieldContainer
 } from './styles';
 import { TextFieldProps } from './types';
 
-const TextField: React.FC<TextFieldProps> = ({ value, label, placeholder, handleChange }) => {
+const TextField: React.FC<TextFieldProps> = ({ value, hasError ,label, placeholder, handleChange }) => {
   return (
     <Container>
       <Label>
@@ -20,6 +21,7 @@ const TextField: React.FC<TextFieldProps> = ({ value, label, placeholder, handle
           onChange={(e) => handleChange(e.target.value)} 
         />
       </TextFieldContainer>
+      { hasError && <ErrorMessage>Filled all the fields.</ErrorMessage>}
     </Container>
   )
 }
