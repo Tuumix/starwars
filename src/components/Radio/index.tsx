@@ -2,8 +2,6 @@ import React from 'react';
 import { Container, Label } from './styles';
 import { RadioButtonProps } from './types';
 
-
-
 const RadioButton: React.FC<RadioButtonProps> = ({ label, selectedValue, handleChange}) => {
   return (
     <Container>
