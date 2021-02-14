@@ -23,8 +23,6 @@ const Table: React.FC = () => {
           sensitivity: 'base'
     });
   });
-
-    console.log(result);
     return filter.filters.order.sort === 'ASC' ? result:result.reverse();
   }
 
@@ -38,7 +36,6 @@ const Table: React.FC = () => {
       return filter.filters.filterByNumericValues.every(filterNumeric => 
         {
           if(filterNumeric.comparison === 'igual a'){
-            console.log(filterNumeric.column, Number(row[filterNumeric.column]));
             return Number(filterNumeric.value) === Number(row[filterNumeric.column])
           } else{
             return filterNumeric.comparison === 'maior que' ? 
