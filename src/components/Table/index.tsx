@@ -27,7 +27,6 @@ const Table: React.FC = () => {
   }
 
   const renderTableData = () => {
-    console.log(filter);
     return data && sortByOrder().filter(item => {
       let filterName = filter.filters.filterByName.name;
       return filterName.length > 0 ? item.name.includes(filterName) : item

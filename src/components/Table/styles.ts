@@ -6,6 +6,7 @@ export const TableContainer = styled.table`
   border-top-right-radius: 10px;
   background-color: ${palette.darkGray};
   border: none;
+  margin-top: 10px;
 `
 
 export const THead = styled.thead`

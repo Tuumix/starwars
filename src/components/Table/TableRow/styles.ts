@@ -14,5 +14,5 @@ export const TableRow = styled.tr`
 `
 
 export const Link = styled.a`
-  color: #72efdd;
+  color: ${palette.lightOrange};
 `

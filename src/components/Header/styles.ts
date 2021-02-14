@@ -2,13 +2,14 @@ import styled from 'styled-components';
 import { palette } from '../../themes/palette';
 
 export const Container = styled.div`
-  height: 80px;
+  height: 70px;
   width: 100%;
-  padding: 20px;
+  padding: 10px;
   background-color: ${palette.dark};
   align-items: center;
 `
 
-export const Title = styled.h2`
-  color: #dcdde1;
+export const Image = styled.img`
+  height: 60px;
+  width: 60px;
 `

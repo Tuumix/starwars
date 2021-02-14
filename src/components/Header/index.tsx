@@ -1,13 +1,10 @@
 import React from 'react';
-import { Container, Title } from './styles';
-
-
+import { Container, Image } from './styles';
+import Logo from '../../assets/Images/StarWarsImage.png';
 const Header: React.FC = () => {
   return (
     <Container>
-      <Title>
-        Star Wars
-      </Title>
+      <Image src={Logo}/>
     </Container>
   )
 }

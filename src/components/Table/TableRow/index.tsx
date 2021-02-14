@@ -21,8 +21,8 @@ const Row:React.FC<TableRowProps> = ({data}) => {
       <Cell>{data.population}</Cell>
       <Cell>{
         <Select onChange={(e) => window.open(e.target.value)}>
-          {data.films.map(film => 
-            <Option>{film}</Option>
+          {data.films.map((film, key) => 
+            <Option key={key}>{film}</Option>
           )}
         </Select>  
       }</Cell>
