@@ -1,16 +1,9 @@
-import { DropItem } from "../../components/DropDown/types";
-import { FiltersTypes } from "../../Types/FilterTypes";
+import { FiltersTypes } from "../../types/FilterTypes";
 
 export interface FilterContextProps {
   filter: FiltersTypes;
-  columns: DropItem[];
-  comparisons: DropItem[];
-  value: string;
-  selectedColumn: string;
-  selectedComparison: string;
+  setNumericFilter: (selectedColumn: string, selectedComparison: string, length: string) => void;
   setNameFilter: (columnName: string) => void;
   removeFilter: (columnName: string) => void;
-  addFilter: (length: string) => void;
-  setColumn: (columnName: string) => void;
-  setComparison: (comparison: string) => void;
+  setOrderBy: (columnName: string, order: string) => void;
 }

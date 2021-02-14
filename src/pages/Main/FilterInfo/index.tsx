@@ -1,30 +1,36 @@
-import React, { useContext } from 'react';
-import Button from '../../../components/Button';
-import { FilterContext } from '../../../contexts/FilterContext';
-import { NumericFilter } from '../../../Types/FilterTypes';
+import React from 'react';
+import { BiX } from "react-icons/bi";
+import palette from '../../../themes/palette';
 import {
-  Container, 
-  SubContaienr
+  Container,
+  ContainerInfo,
+  Info,
+  RemoveButton,
+  SubContainer
 } from './styles';
+import { FilterInfoProps } from './types';
 
-const FilterInfo: React.FC<NumericFilter> = ({ column, comparison, value}) => {
-  const { removeFilter } = useContext(FilterContext);
-  //TODO fix this div inside the return method
+const FilterInfo: React.FC<FilterInfoProps> = ({ column, comparison, value, callback}) => {
+
   return (
-    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', margin: 10}}> 
-      <Container>
-        <SubContaienr>
-          <p>{column}</p>
-          <p>{comparison}</p>
-          <p>{value}</p>
-        </SubContaienr>
-      </Container>
-      <Button 
-        title="Delete Filter"
-        color="red"
-        callback={() => removeFilter(column)}
-      />
-    </div>
+    <Container> 
+      <SubContainer>
+        <ContainerInfo>
+          <Info>
+            {column}
+          </Info>
+          <Info>
+            {comparison}
+          </Info>
+          <Info>
+            {value}
+          </Info>
+        </ContainerInfo>
+      </SubContainer>
+      <RemoveButton onClick={() => callback(column)}>
+        <BiX size={30} color={palette.redPigment} />
+      </RemoveButton>
+    </Container>
   )
 }
 

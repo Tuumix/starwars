@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import palette from '../../themes/palette';
 
 export const Dropbtn = styled.div`
   display: inline-block;
@@ -7,9 +8,9 @@ export const Dropbtn = styled.div`
   text-align: center;
   color: black;
   padding: 14px 16px;
-  background-color: #353b48;
+  background-color: ${palette.dark};
   text-decoration: none;
-  color: #f9c74f;
+  color: ${palette.lightOrange};
   &:hover {
     display: block;
   }
@@ -45,6 +46,6 @@ export const Option = styled.button`
   outline: none;
   background-color: #353b48;
   &:hover {
-    color: #f9c74f;
+    color: ${palette.lightOrange};
   }
 `

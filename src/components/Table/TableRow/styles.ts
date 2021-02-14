@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import palette from '../../../themes/palette';
 
 export const Cell = styled.td`
   text-align: left;
   color: #dcdde1;
-  border-bottom: 1px solid #18FFFF;
+  border-bottom: 4px solid ${palette.dark};
   width: 150px;
   padding: 5px;
 `

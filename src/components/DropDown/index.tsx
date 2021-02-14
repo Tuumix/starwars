@@ -1,4 +1,5 @@
 import React from 'react';
+import palette from '../../themes/palette';
 import {
   Dropbtn,
   DropDownContent, 
@@ -10,7 +11,7 @@ import { DropDownProps } from './types';
 const DropDown: React.FC<DropDownProps> = ({ value, dropList, handleChange }) => {
   return (
     <DropDownLi>
-      <Dropbtn onClick={() => console.log("DropDown")}>
+      <Dropbtn>
         {value ? <p>{value}</p> : <p>Select a Column</p>}
       </Dropbtn>
       <DropDownContent>
@@ -22,7 +23,11 @@ const DropDown: React.FC<DropDownProps> = ({ value, dropList, handleChange }) =>
               onClick={() => handleChange(item.name)} 
               disabled={item.disable}
               >
-              <p style={{color: item.disable ? 'red': '#f9c74f'}}>{item.name}</p>
+              <p 
+                style={{color: item.disable ? palette.redPigment: palette.lightOrange}}
+              >
+                {item.name}
+              </p>
             </Option>
           )
         }
@@ -31,4 +36,4 @@ const DropDown: React.FC<DropDownProps> = ({ value, dropList, handleChange }) =>
   )
 }
 
-export default React.memo(DropDown);
+export default DropDown;

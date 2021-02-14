@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import palette from '../../themes/palette';
 
 export const Container = styled.div`
   padding: 20px;
@@ -36,4 +37,21 @@ export const FiltersContainer = styled.div`
   justify-content: center;
   height: 42vh;
   padding: 20px;
+`
+
+export const Option = styled.option`
+  width: 100px;
+  padding: 8px;
+`
+
+export const Select = styled.select`
+  appearance: none;
+  width: 100px;
+  padding: 8px;
+  background-color: ${palette.dark};
+  color: ${palette.lightOrange};
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  outline: none;
+  text-align: center;
 `

@@ -1,47 +1,51 @@
-import React, { useContext, useEffect, useState } from 'react';
-import TableHeader from './TableHeader';
-import TableRow from './TableRow';
+import React, { useContext } from 'react';
 import { FilterContext } from '../../contexts/FilterContext/index';
 import { TableContext } from '../../contexts/TableContext';
 import {
   TableBody,
   TableContainer,
-  TH,
   THead,
   TR
 } from './styles';
+import TableHeader from './TableHeader';
+import TableRow from './TableRow';
 
 const Table: React.FC = () => {
   const { data, keys } = useContext(TableContext);
   const { filter } = useContext(FilterContext);
 
   const sortByOrder = () => {
-    return filter.filters.order.sort === 'ASC' ? 
-      data.sort((a,b) => { return a[filter.filters.order.column].valueOf() 
-        > b[filter.filters.order.column].valueOf() ? 1:-1}) : 
-          data.sort((a,b) => { return a[filter.filters.order.column].valueOf() 
-            < b[filter.filters.order.column].valueOf() ? 1:-1})
+    const result = data.sort((a,b) => { 
+      return a[filter.filters.order.column].valueOf().toString()
+        .localeCompare(b[filter.filters.order.column].valueOf().toString(), 
+        undefined, {
+          numeric: true,
+          sensitivity: 'base'
+    });});
+
+    return filter.filters.order.sort === 'ASC' ? result:result.reverse();
   }
 
   const renderTableData = () => {
+    console.log(filter);
     return data && sortByOrder().filter(item => {
       let filterName = filter.filters.filterByName.name;
       return filterName.length > 0 ? item.name.includes(filterName) : item
     }
-    ).filter(teste => {
-      return filter.filters.filterByNumericValues.every(item => 
+    ).filter(row => {
+      return filter.filters.filterByNumericValues.every(filterNumeric => 
         {
-          if(item.comparison === 'igual a'){
-            return Number(item.value) === Number(teste[item.column])
+          if(filterNumeric.comparison === 'igual a'){
+            console.log('entrou');
+            return Number(filterNumeric.value) === Number(row[filterNumeric.column])
           } else{
-            return item.comparison === 'maior que' ? 
-              Number(item.value) < Number(teste[item.column]) : 
-                Number(item.value) > Number(teste[item.column])
+            return filterNumeric.comparison === 'maior que' ? 
+              Number(filterNumeric.value) < Number(row[filterNumeric.column]) : 
+                Number(filterNumeric.value) > Number(row[filterNumeric.column])
           }
         }
       )
-    })
-    .map((teste, key) => 
+    }).map((teste, key) => 
       <TableRow key={key} data={teste} />
     )
   }
@@ -67,4 +71,4 @@ const Table: React.FC = () => {
   )
 }
 
-export default Table;
+export default React.memo(Table);

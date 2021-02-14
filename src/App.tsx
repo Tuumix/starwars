@@ -3,7 +3,7 @@ import Header from './components/Header';
 import {TableProvider} from './contexts/TableContext';
 import {FilterProvider} from './contexts/FilterContext'; 
 import Main from './pages/Main';
-import { GlobalStyle } from './Themes/GlobalStyle';
+import { GlobalStyle } from './themes/GlobalStyle';
 
 const App: React.FC = () => {
   return (

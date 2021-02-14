@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {palette} from '../../themes/palette';
 
 export const Container = styled.div`
   flex-direction: column;
@@ -9,7 +10,7 @@ export const TextFieldContainer = styled.div`
   border-style: solid;
   border-width: 1px;
   border-color: transparent;
-  border-bottom-color: #f9c74f;
+  border-bottom-color: ${palette.lightOrange};
   background-color: #1e212d;
   height: 30px;
   outline: none;
@@ -18,7 +19,7 @@ export const TextFieldContainer = styled.div`
 `
 
 export const Input = styled.input`
-  color: #f9c74f;
+  color: ${palette.lightOrange};
   outline: none;
   background: transparent;
   border: 0px;
@@ -34,5 +35,5 @@ export const Input = styled.input`
 
 export const Label = styled.p`
   font-size: 13px;
-  color: #f9c74f;
+  color: ${palette.lightOrange};
 `

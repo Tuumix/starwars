@@ -1,6 +1,10 @@
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, {
+  createContext, 
+  useCallback, 
+  useState 
+} from 'react';
 import { DataProps, TableContextProps } from './types';
-
+import api from '../../services/api';
 export const TableContext = createContext<TableContextProps>(
   {} as TableContextProps
 );
@@ -12,23 +16,32 @@ export const TableProvider: React.FC = ({ children }) => {
   })
 
   const loadPage = (page: number) => {
-    fetch(`https://swapi-trybe.herokuapp.com/api/planets/?page=${page}`)
-      .then(response => response.json())
-        .then(data => setData(data.results));    
+    try{
+      const response = api.get(`?page=${page}`);
+      const data = response || [];
+      data.then(response => response.data)
+        .then(response => setData(response.results));
+    }catch(error) {
+      console.log('Error->TableContext->loadPage', error);
+    }
   }
 
-  const fetchData = useCallback(() => {
-    fetch('https://swapi-trybe.herokuapp.com/api/planets/')
-      .then(response => response.json())
-        .then(data => setData(data.results));
+  const fetchData = useCallback(async () => {
+    try{
+      api.get('')
+        .then(response => response.data)
+          .then(data => setData(data.results));
+    }catch(error) {
+      console.log('Error->TableContext->fetchData');
+    }
   }, [])
 
   return (
     <TableContext.Provider value={{
-      data: data,
-      keys: keys,
-      fetchData: fetchData,
-      loadPage: loadPage,
+      data,
+      keys,
+      fetchData,
+      loadPage,
     }}>
       { children }
     </TableContext.Provider>

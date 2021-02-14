@@ -1,14 +1,15 @@
 import styled from 'styled-components';
+import palette from '../../themes/palette';
 
 export const TableContainer = styled.table`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  background-color: #2f3640;
+  background-color: ${palette.darkGray};
   border: none;
 `
 
 export const THead = styled.thead`
-  background-color: #323133;
+  background-color: ${palette.dark};
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   text-align: center;

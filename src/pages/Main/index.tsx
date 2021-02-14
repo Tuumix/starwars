@@ -2,45 +2,64 @@ import React, { useContext, useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import Button from '../../components/Button';
 import DropDown from '../../components/DropDown';
+import { DropItem } from '../../components/DropDown/types';
 import RadioButton from '../../components/Radio';
 import Table from '../../components/Table';
 import TextField from '../../components/TextField';
 import { FilterContext } from '../../contexts/FilterContext';
 import { TableContext } from '../../contexts/TableContext';
+import {palette} from '../../themes/palette';
 import FilterInfo from './FilterInfo';
 import {
   ButtonContainer,
   Container,
   ContainerAction,
   FiltersContainer,
-  InputsContainer
+  InputsContainer,
+  Select,
+  Option
 } from './styles';
 
 
 const Main: React.FC = () => {
-  const [name, setName] = useState('');
   const [length, setLength] = useState('');
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
-  const { fetchData, loadPage } = useContext(TableContext);
+  const { keys, fetchData, loadPage } = useContext(TableContext);
   const [selectedOrder, setSelectedOrder] = useState('ASC');
+  const [orderColumn, setOrderColumn] = useState('name');
+  const [selectedColumn, setSelectedColumn] = useState('');
+  const [selectedComparison, setSelectedComparison] = useState('');
   const { 
     filter, 
-    columns, 
-    comparisons, 
-    selectedColumn, 
-    selectedComparison, 
     setNameFilter, 
-    addFilter, 
-    setColumn, 
-    setComparison, 
+    setOrderBy,
+    setNumericFilter,
+    removeFilter
   } = useContext(FilterContext);
+  const [columns, setColumns] = useState<Array<DropItem>>([
+    {id: 1, name: 'population', disable: false},
+    {id: 2, name: 'orbital_period', disable: false},
+    {id: 3, name: 'diameter', disable: false},
+    {id: 4, name: 'rotation_period ', disable: false},
+    {id: 5, name: 'surface_water', disable: false},
+  ]);
+
+  const comparisons: DropItem[] = [
+    {id: 1, name: 'maior que'},
+    {id: 2, name: 'menor que'},
+    {id: 3, name: 'igual a'},
+  ];
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  function turnPage(currentPage: number) {
+  const setOrder = (e: string) => {
+    setSelectedOrder(e);
+  }
+
+  const turnPage = (currentPage: number) => {
     if(currentPage > 0) {
       currentPage === 1 ? fetchData() : loadPage(currentPage);
       setPage(currentPage);
@@ -51,14 +70,35 @@ const Main: React.FC = () => {
     if(selectedComparison === '' || selectedColumn === '' || length === ''){
       console.log('ops, it looks like you are trying to insert nothing on filter!');
     } else{
-      addFilter(length);
+      addFilter(selectedColumn, selectedComparison, length);
     }
   }
 
+  const addFilter = (selectedColumn: string, selectedComparison: string,length: string) => {
+    setNumericFilter(selectedColumn, selectedComparison, length);
+    const result = columns.map(item => {
+      if(item.name === selectedColumn) {
+        item.disable = true;
+      }
+      return item;
+    })
+    setSelectedColumn('');
+    setSelectedComparison('');
+    setColumns([...result]);
+  }
 
-  const setColumnName = (columnName: string) => {
-    setName(columnName);
-    setNameFilter(columnName);
+  const enableColumn = (columnName: string) => {
+    for(let i = 0; i < columns.length; i++) {
+      if(columns[i].name === columnName){
+        columns[i].disable = !columns[i].disable;
+      }
+    }
+    setColumns([...columns]);
+  }
+
+  const deleteFilter = (columnName: string) => {
+    removeFilter(columnName);
+    enableColumn(columnName);
   }
 
   const renderModal = () => {
@@ -67,7 +107,7 @@ const Main: React.FC = () => {
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}
         style={{content:{
-          backgroundColor: '#2f3640',
+          backgroundColor: palette.darkGray,
           top: '50%',
           left: '50%',
           right: '40%',
@@ -84,12 +124,12 @@ const Main: React.FC = () => {
         <DropDown 
           value={selectedColumn} 
           dropList={columns} 
-          handleChange={setColumn}
+          handleChange={setSelectedColumn}
         />
         <DropDown 
           value={selectedComparison} 
           dropList={comparisons} 
-          handleChange={setComparison}
+          handleChange={setSelectedComparison}
         />
         <TextField 
           label="Length" 
@@ -99,7 +139,7 @@ const Main: React.FC = () => {
         />
         <Button 
           title="Confirm"
-          color="lightblue"
+          color={palette.reptileGreen}
           callback={() => validateFields()}
         />
       </InputsContainer>
@@ -110,6 +150,7 @@ const Main: React.FC = () => {
                 column={filter.column} 
                 comparison={filter.comparison} 
                 value={filter.value} 
+                callback={deleteFilter}
               />
             )
           }
@@ -118,41 +159,51 @@ const Main: React.FC = () => {
     )
   }
 
-  const setOrder = (e: string) => {
-    setSelectedOrder(e);
+  const renderSelect = () => {
+    return (
+      <Select onClick={(e) => setOrderColumn(e.currentTarget.value)}>
+        {
+          keys.map((key, index) => 
+            <Option key={index}>{key}</Option>
+          )
+        }
+      </Select>
+    )
   }
 
   return (
     <>
       <Container> 
-        <div style={{ marginBottom: 10, width: 200}}>
+        <div style={{ display: 'flex', marginBottom: 10}}>
           <TextField 
             label="Search by Name" 
-            value={name} placeholder="Name" 
-            handleChange={(e) => setColumnName(e)}
+            value={filter.filters.filterByName.name} placeholder="Name" 
+            handleChange={(e) => setNameFilter(e)}
           />
-          <div >
+          <>
             <RadioButton label="ASC" selectedValue={selectedOrder} handleChange={() => setOrder('ASC')} />  
             <RadioButton label="DESC" selectedValue={selectedOrder} handleChange={() => setOrder('DESC')} />  
-          </div>
+          </>
+          {renderSelect()}
+          <input type="button" onClick={() => setOrderBy(orderColumn, selectedOrder)} />
         </div>
         <Table />
         <ContainerAction>
           <ButtonContainer>
             <Button 
               title="<" 
-              color='#f9c74f' 
+              color={palette.lightOrange} 
               callback={() => turnPage(page - 1)}
               />
             <Button 
               title=">" 
-              color='#f9c74f' 
+              color={palette.lightOrange} 
               callback={() => turnPage(page + 1)}
             />
           </ButtonContainer>
           <Button 
             title="Add Filter"
-            color="#fb5607"
+            color={palette.yellow}
             callback={() => setIsOpen(true)}
           />
         </ContainerAction>
