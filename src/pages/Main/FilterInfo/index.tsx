@@ -11,7 +11,6 @@ import {
 import { FilterInfoProps } from './types';
 
 const FilterInfo: React.FC<FilterInfoProps> = ({ column, comparison, value, callback}) => {
-
   return (
     <Container> 
       <SubContainer>

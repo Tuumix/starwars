@@ -11,4 +11,5 @@ export const Label = styled.span`
   font-size: 15px;
   margin-left: 10px;
   color: ${palette.lightOrange};
+  margin-top: 10px;
 `

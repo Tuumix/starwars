@@ -6,7 +6,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({ label, selectedValue, handleC
   return (
     <Container>
       <input type="radio" checked={selectedValue === label} onChange={handleChange} />
-      <Label style={{marginLeft: 10}}>{label}</Label>
+      <Label>{label}</Label>
     </Container>
   )
 }

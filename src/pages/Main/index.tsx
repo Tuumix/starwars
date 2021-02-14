@@ -26,16 +26,15 @@ import {
 
 
 const Main: React.FC = () => {
+  const { keys, fetchData, loadPage } = useContext(TableContext);
   const [length, setLength] = useState('');
   const [page, setPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
-  const { keys, fetchData, loadPage } = useContext(TableContext);
   const [selectedOrder, setSelectedOrder] = useState('ASC');
   const [orderColumn, setOrderColumn] = useState('name');
   const [selectedColumn, setSelectedColumn] = useState('');
   const [selectedComparison, setSelectedComparison] = useState('');
   const [hasError, setHasError] = useState(false);
-
   const { 
     filter, 
     setNameFilter, 
@@ -43,6 +42,7 @@ const Main: React.FC = () => {
     setNumericFilter,
     removeFilter
   } = useContext(FilterContext);
+  
   const [columns, setColumns] = useState<Array<DropItem>>([
     {id: 1, name: 'population', disable: false},
     {id: 2, name: 'orbital_period', disable: false},
@@ -61,8 +61,8 @@ const Main: React.FC = () => {
     fetchData();
   }, [fetchData]);
 
-  const setOrder = (e: string) => {
-    setSelectedOrder(e);
+  const setOrder = (orderColumn: string) => {
+    setSelectedOrder(orderColumn);
   }
 
   const turnPage = (currentPage: number) => {

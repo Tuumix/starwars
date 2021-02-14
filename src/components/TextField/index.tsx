@@ -21,7 +21,7 @@ const TextField: React.FC<TextFieldProps> = ({ value, hasError ,label, placehold
           onChange={(e) => handleChange(e.target.value)} 
         />
       </TextFieldContainer>
-      { hasError && <ErrorMessage>Filled all the fields.</ErrorMessage>}
+      { hasError && <ErrorMessage>Fill all the fields.</ErrorMessage>}
     </Container>
   )
 }
