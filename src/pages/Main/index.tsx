@@ -31,7 +31,7 @@ const Main: React.FC = () => {
   const [page, setPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState('ASC');
-  const [orderColumn, setOrderColumn] = useState('');
+  const [orderColumn, setOrderColumn] = useState('name');
   const [selectedColumn, setSelectedColumn] = useState('');
   const [selectedComparison, setSelectedComparison] = useState('');
   const [hasError, setHasError] = useState(false);
