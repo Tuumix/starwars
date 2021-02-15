@@ -3,8 +3,9 @@ import palette from '../../themes/palette';
 
 export const Container = styled.div`
   padding: 20px;
-  background-color: #353b48;
-  height: 93vh;
+  background-color: ${palette.backgroundColor};
+  display: flex;
+  flex-direction: column;
 `
 
 export const ButtonContainer = styled.div`

@@ -44,7 +44,7 @@ export const Option = styled.button`
   display: block;
   color: #18FFFF;
   outline: none;
-  background-color: #353b48;
+  background-color: ${palette.backgroundColor};
   &:hover {
     color: ${palette.lightOrange};
   }

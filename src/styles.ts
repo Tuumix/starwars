@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import palette from './themes/palette';
 
 export const Container = styled.div`
     padding: 20px;
-    background-color: #353b48;
+    background-color: ${palette.backgroundColor};
 `
 
 export const ButtonContainer = styled.div`

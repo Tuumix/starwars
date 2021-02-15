@@ -5,11 +5,11 @@ import React, {
 } from 'react';
 import { DataProps, TableContextProps } from './types';
 import api from '../../services/api';
-export const TableContext = createContext<TableContextProps>(
+const TableContext = createContext<TableContextProps>(
   {} as TableContextProps
 );
 
-export const TableProvider: React.FC = ({ children }) => {
+const TableProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<Array<DataProps>>([]);
   const keys: Array<string> = Object.keys(data[0] || {}).filter(key =>{
     return key !== 'residents';
@@ -47,3 +47,5 @@ export const TableProvider: React.FC = ({ children }) => {
     </TableContext.Provider>
   );
 };
+
+export {TableContext, TableProvider}

@@ -6,7 +6,8 @@ export const palette = Object.freeze({
   redPigment: '#EA2027',
   yellow: '#fff200',
   reptileGreen: '#20bf6b',
-  lightblue: '#70d6ff'
+  lightblue: '#70d6ff',
+  backgroundColor: '#353b48',
 })
 
 export default palette;
