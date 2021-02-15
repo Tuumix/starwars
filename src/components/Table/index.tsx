@@ -23,6 +23,8 @@ const Table: React.FC = () => {
           sensitivity: 'base'
     });
   });
+  console.log(filter);
+  console.log(result);
     return filter.filters.order.sort === 'ASC' ? result:result.reverse();
   }
 

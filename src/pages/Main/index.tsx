@@ -31,7 +31,7 @@ const Main: React.FC = () => {
   const [page, setPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState('ASC');
-  const [orderColumn, setOrderColumn] = useState('name');
+  const [orderColumn, setOrderColumn] = useState('');
   const [selectedColumn, setSelectedColumn] = useState('');
   const [selectedComparison, setSelectedComparison] = useState('');
   const [hasError, setHasError] = useState(false);
@@ -174,10 +174,10 @@ const Main: React.FC = () => {
 
   const renderSelect = () => {
     return (
-      <Select onClick={(e) => setOrderColumn(e.currentTarget.value)}>
+      <Select onChange={(e) => setOrderColumn(e.target.value)}>
         {
           keys.map((key, index) => 
-            <Option key={index}>{key}</Option>
+            <Option key={index} value={key}>{key}</Option>
           )
         }
       </Select>
@@ -185,6 +185,7 @@ const Main: React.FC = () => {
   }
 
   const applyOrderBy = () => {
+    console.log(orderColumn);
     setOrderBy(orderColumn, selectedOrder);
   }
 
