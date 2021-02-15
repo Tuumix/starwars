@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import palette from '../../themes/palette';
 
+export const Container = styled.div`
+  overflow-x: auto;
+`
+
 export const TableContainer = styled.table`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;

@@ -38,6 +38,12 @@ export const FiltersContainer = styled.div`
   justify-content: center;
   height: 42vh;
   padding: 20px;
+
+  @media screen and (max-width: 1541px) {
+    flex-direction: column;
+    height: 60vh;
+    justify-content: space-evenly;
+  }
 `
 
 export const Option = styled.option`
@@ -59,6 +65,9 @@ export const Select = styled.select`
 
 export const FilterContainer = styled.div`
   display: flex;
+  @media screen and (max-width: 1541px) {
+    flex-direction: column;
+  }
 `
 
 export const OrderContainer = styled.div`
@@ -67,6 +76,11 @@ export const OrderContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   margin-top: 10px;
+
+  @media screen and (max-width: 1541px) {
+    width: 100%;
+    flex-wrap: wrap;
+  }
 `
 
 export const Label = styled.label`

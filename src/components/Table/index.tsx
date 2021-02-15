@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { FilterContext } from '../../contexts/FilterContext/index';
 import { TableContext } from '../../contexts/TableContext';
 import {
+  Container,
   TableBody,
   TableContainer,
   THead,
@@ -23,12 +24,10 @@ const Table: React.FC = () => {
           sensitivity: 'base'
     });
   });
-  console.log(filter);
-  console.log(result);
     return filter.filters.order.sort === 'ASC' ? result:result.reverse();
   }
 
-  const renderTableData = () => {
+  const renderDataTable = () => {
     return data && sortByOrder().filter(item => {
       let filterName = filter.filters.filterByName.name;
       return filterName.length > 0 ? item.name.includes(filterName) : item
@@ -51,7 +50,7 @@ const Table: React.FC = () => {
   }
 
   return (
-    <div style={{overflowX: 'auto'}}>
+    <Container>
       <TableContainer>
         <THead>
           <TR>
@@ -64,10 +63,10 @@ const Table: React.FC = () => {
           </TR>
         </THead>
         <TableBody>
-          {renderTableData()}
+          {renderDataTable()}
         </TableBody>
       </TableContainer>
-    </div>
+    </Container>
   )
 }
 

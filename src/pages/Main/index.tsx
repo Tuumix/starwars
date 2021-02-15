@@ -185,7 +185,6 @@ const Main: React.FC = () => {
   }
 
   const applyOrderBy = () => {
-    console.log(orderColumn);
     setOrderBy(orderColumn, selectedOrder);
   }
 
